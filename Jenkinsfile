@@ -18,6 +18,7 @@ pipeline {
         Application_name = "${params.Environment}-${JOB_NAME}"
         DeploymentGroup_Name = "DG-${params.Environment}-${JOB_NAME}"
         bucket_name = "${params.Environment}-${JOB_NAME}"
+        SONAR_TOKEN = credentials('SONAR_TOKEN_GRADLE')
     }
     stages {
         stage('Clone Repository') {
@@ -40,8 +41,7 @@ pipeline {
                 chmod +x gradlew
                 ./gradlew clean build
                 #--exclude-task test -i
-                ./gradlew sonarqube -Dsonar.projectKey="gradle-sonar" -Dsonar.organization="jenkins-prefav" -Dsonar.host.url="https://sonarcloud.io" -Dsonar.login=3065346cb9f79c8721841c411d7ca9d0ae340ae7
-                #$SONAR_TOKEN_GRADLE
+                ./gradlew sonarqube -Dsonar.projectKey="gradle-sonar" -Dsonar.organization="jenkins-prefav" -Dsonar.host.url="https://sonarcloud.io" -Dsonar.login=$SONAR_TOKEN_GRADLE
                 #3065346cb9f79c8721841c411d7ca9d0ae340ae7
                 '''
             }
