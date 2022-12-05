@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/order/
+
+hooks:
+  BeforeInstall:
+    - location: Dependency_Scripts/rmBeforeInstall.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: Dependency_Scripts/startApplication.sh
+      timeout: 600
+      runas: root
